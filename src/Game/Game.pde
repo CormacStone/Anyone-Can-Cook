@@ -71,3 +71,12 @@ void keyReleased() {
   if (key == 'd') r = false;
   if (key == 'w' || key == ' ') u = false;
 }
+
+void mousePressed() {
+  switch(screen) {
+    case 's':
+    if(btnStart.clicked()) {
+      screen = 'p';
+    }
+  }
+}
