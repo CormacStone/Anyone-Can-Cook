@@ -26,5 +26,13 @@ class Menu {
     text("You dumb",width/2, height/2);
   }
   void pauseScreen() {
+    background(0);
+  textAlign(CENTER);
+  textSize(100);
+  fill(255);
+  text("Pause", 300,200);
+  btnSettings.display();
+  btnSave.display();
+  btnPlay.display();
   }
 }
