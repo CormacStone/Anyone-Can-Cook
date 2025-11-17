@@ -48,7 +48,14 @@ void draw() {
     popMatrix();
     println(player.x, player.y);
     break;
-  }
+  case 'z':
+    menu.pauseScreen();
+    break;
+  case 'e':
+    menu.endScreen();
+    noLoop();
+    break;
+  }   
 }
 
 void keyPressed() {
@@ -56,6 +63,7 @@ void keyPressed() {
   if (key == 'd') r = true;
   if (key == 'w' || key == ' ') u = true;
   if (key == 'e') menu.display();
+  if (key == '-') screen = 'e';
 }
 
 void keyReleased() {
