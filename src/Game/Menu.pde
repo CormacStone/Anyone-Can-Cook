@@ -1,3 +1,4 @@
+//Cormac Stone, Trace Kinghorn, Maxwell Johnson + Kolby Green
 class Menu {
   int x, y, w, h;
   Menu() {
@@ -12,6 +13,9 @@ class Menu {
   void hover() {
   }
   void startScreen() {
+    textAlign(CENTER);
+    text("Start Screen: filler edition", width/2, 100);
+    btnStart.display();
   }
   void endScreen() {
     background(1);
