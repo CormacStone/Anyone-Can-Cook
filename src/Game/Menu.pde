@@ -14,7 +14,9 @@ class Menu {
     println(inv);
   }
   void hover() {}
-}
+}  void startScreen(){}
+  void endScreen(){}
+  void pauseScreen(){}
 boolean isActive() {
   return true;
 }
