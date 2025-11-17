@@ -12,6 +12,7 @@ Player player;
 Map map;
 Enemy guy;
 Menu menu;
+Button btnStart, btnPause, btnMenu;
 
 void setup() {
   jAvail = false;
