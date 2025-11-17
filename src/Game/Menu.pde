@@ -14,6 +14,11 @@ class Menu {
   void startScreen() {
   }
   void endScreen() {
+    background(1);
+    fill(255);
+    textSize(100);
+    textAlign(CENTER);
+    text("You dumb",width/2, height/2);
   }
   void pauseScreen() {
   }
