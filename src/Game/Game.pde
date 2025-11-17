@@ -12,12 +12,15 @@ Player player;
 Map map;
 Enemy guy;
 Menu menu;
-Button btnStart, btnPause, btnMenu;
+Button btnStart, btnPause, btnMenu, btnSettings, btnSave, btnPlay;
 
 void setup() {
   jAvail = false;
   size(600, 600);
   //fullScreen();
+  btnSettings = new Button("Settings", 220, 360, 160, 50);
+  btnSave = new Button("Save", 220, 300, 160, 50);
+  btnPlay = new Button("Unpause", 220, 240, 160, 50);
   menu = new Menu();
   map = new Map(1 + ".csv");   // loads CSV or defaults if missing
   player = new Player(100, 100, 18, 80, 3); // (x, y, w, h, xspeed)
@@ -64,6 +67,7 @@ void keyPressed() {
   if (key == 'w' || key == ' ') u = true;
   if (key == 'e') menu.display();
   if (key == '-') screen = 'e';
+  if (key == 'z') screen = 'z';
 }
 
 void keyReleased() {
