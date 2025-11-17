@@ -17,6 +17,7 @@ class Menu {
     text("Start Screen: filler edition", width/2, 100);
     btnStart.display();
   }
+//Maxwell Johnson
   void endScreen() {
     background(1);
     fill(255);
