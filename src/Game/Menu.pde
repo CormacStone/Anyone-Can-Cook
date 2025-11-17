@@ -1,6 +1,5 @@
 class Menu {
   int x, y, w, h;
-
   Menu() {
     x=width/2;
     y=height/2;
