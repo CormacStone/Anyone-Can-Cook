@@ -1,22 +1,21 @@
-// Kolby Green
 class Menu {
-  int x,y,w,h,inv;
-  
+  int x, y, w, h;
+
   Menu() {
     x=width/2;
     y=height/2;
-    w=250;
-    h=750;
-    this.inv = inv;
+    w=25;
+    h=75;
   }
   void display() {
-    rect(x,y,w,h);
-    println(inv);
+    rect(x, y, w, h);
   }
-  void hover() {}
-}  void startScreen(){}
-  void endScreen(){}
-  void pauseScreen(){}
-boolean isActive() {
-  return true;
+  void hover() {
+  }
+  void startScreen() {
+  }
+  void endScreen() {
+  }
+  void pauseScreen() {
+  }
 }

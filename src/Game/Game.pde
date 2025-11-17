@@ -7,10 +7,12 @@ float camX = 0;
 float camY = 0;
 float camSmooth = 0.1;  // smaller = smoother
 int currentLevel = 1;
+char screen = 'p';
 Player player;
 Map map;
 Enemy guy;
 Menu menu;
+
 void setup() {
   jAvail = false;
   size(600, 600);
@@ -22,22 +24,30 @@ void setup() {
 }
 
 void draw() {
-  background(255);
-  // --- Smooth camera follow ---
-  float targetCamX = constrain(player.x - width / 2, 0, map.cols * map.cellSize - width);
-  float targetCamY = constrain(player.y - height / 2, 0, map.rows * map.cellSize - height);
-  camX = lerp(camX, targetCamX, camSmooth);
-  camY = lerp(camY, targetCamY, camSmooth);
+  switch(screen) {
+  case 's':
+    menu.startScreen();
+    break;
+  case 'p':
+    background(255);
+    // --- Smooth camera follow ---
+    float targetCamX = constrain(player.x - width / 2, 0, map.cols * map.cellSize - width);
+    float targetCamY = constrain(player.y - height / 2, 0, map.rows * map.cellSize - height);
+    camX = lerp(camX, targetCamX, camSmooth);
+    camY = lerp(camY, targetCamY, camSmooth);
 
-  // --- Apply camera ---
-  pushMatrix();
-  translate(-camX, -camY);
-  map.drawMap();
-  player.display();
-  player.handleMovement();
-  guy.display();
-  guy.move();
-  popMatrix();
+    // --- Apply camera ---
+    pushMatrix();
+    translate(-camX, -camY);
+    map.drawMap();
+    player.display();
+    player.handleMovement();
+    guy.display();
+    guy.move();
+    popMatrix();
+    println(player.x, player.y);
+    break;
+  }
 }
 
 void keyPressed() {
