@@ -27,77 +27,90 @@ class Player {
   }
 
   void handleMovement() {
-    float newX = player.x;
-    float newY = player.y;
 
-    // Horizontal movement
-    if (l && !map.hasSolidToLeft(player.x, player.y, player.h)) {
-      newX -= player.xspeed;
+    // --------------------------
+    // 1. HORIZONTAL MOVEMENT
+    // --------------------------
+    float newX = x;
+
+    if (l) newX -= xspeed;
+    if (r) newX += xspeed;
+
+    // Horizontal collision detection
+    int top = int(y / map.cellSize);
+    int bottom = int((y + h - 1) / map.cellSize);
+
+    if (newX > x) {
+        // moving right
+        int col = int((newX + w - 1) / map.cellSize);
+        for (int j = top; j <= bottom; j++) {
+            if (map.isSolid(col, j)) {
+                newX = col * map.cellSize - w;
+                break;
+            }
+        }
+    } else if (newX < x) {
+        // moving left
+        int col = int(newX / map.cellSize);
+        for (int j = top; j <= bottom; j++) {
+            if (map.isSolid(col, j)) {
+                newX = (col + 1) * map.cellSize;
+                break;
+            }
+        }
     }
-    if (r && !map.hasSolidToRight(player.x, player.y, player.w, player.h)) {
-      newX += player.xspeed;
-    }
 
-    // Apply gravity
-    if (!onGround) player.vy += gravity;
+    x = newX;
 
-    // Vertical movement
-    newY += player.vy;
+    // --------------------------
+    // 2. APPLY GRAVITY
+    // --------------------------
+    if (!onGround) vy += gravity;
 
-    // --- Floor collision ---
+    // --------------------------
+    // 3. VERTICAL MOVEMENT
+    // --------------------------
+    float newY = y + vy;
+
+    int left = int(x / map.cellSize);
+    int right = int((x + w - 1) / map.cellSize);
+
     onGround = false;
-    int colLeft = int(newX / map.cellSize);
-    int colRight = int((newX + player.w - 1) / map.cellSize);
-    int bottomRow = int((newY + player.h) / map.cellSize);
 
-    for (int c = colLeft; c <= colRight; c++) {
-      if (map.isSolid(c, bottomRow)) {
-        newY = bottomRow * map.cellSize - player.h; // snap to ground
-        player.vy = 0;
-        onGround = true;
-        break;
-      }
+    if (vy > 0) {
+        // falling
+        int row = int((newY + h) / map.cellSize);
+        for (int c = left; c <= right; c++) {
+            if (map.isSolid(c, row)) {
+                newY = row * map.cellSize - h;
+                vy = 0;
+                onGround = true;
+                break;
+            }
+        }
+    } else if (vy < 0) {
+        // jumping upwards
+        int row = int(newY / map.cellSize);
+        for (int c = left; c <= right; c++) {
+            if (map.isSolid(c, row)) {
+                newY = (row + 1) * map.cellSize;
+                vy = 0;
+                break;
+            }
+        }
     }
 
-    // --- Ceiling collision ---
-    int topRow = int(newY / map.cellSize);
-    for (int c = colLeft; c <= colRight; c++) {
-      if (map.isSolid(c, topRow)) {
-        newY = (topRow + 1) * map.cellSize;
-        player.vy = 0;
-      }
+    y = newY;
+
+    // --------------------------
+    // 4. JUMP
+    // --------------------------
+    if (u && onGround) {
+        vy = jumpForce;
+        onGround = false;
     }
+}
 
-    // --- Jumping ---
-    if (u && onGround || jAvail) {
-      player.vy = jumpForce;
-      onGround = false;
-      jAvail = false;
-    }
-
-    int playerColLeft = int(player.x / map.cellSize);
-    int playerColRight = int((player.x + player.w - 1) / map.cellSize);
-    int playerRow = int((player.y + player.h / 2) / map.cellSize);
-
-    int leftTile = map.getTile(playerColLeft, playerRow);
-    int rightTile = map.getTile(playerColRight, playerRow);
-
-    if (leftTile == 5) {
-      loadNextMap("left");
-      newX = 100;
-      newY = 100;
-    }
-    if (rightTile == 5) {
-      loadNextMap("right");
-      newY = 100;
-      newX = 100;
-    }
-
-
-    // Commit updates
-    player.x = newX;
-    player.y = newY;
-  }
 
   void loadNextMap(String e) {
     if (e=="left") {
