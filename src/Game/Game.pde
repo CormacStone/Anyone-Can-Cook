@@ -7,7 +7,7 @@ float camX = 0;
 float camY = 0;
 float camSmooth = 0.1;  // smaller = smoother
 int currentLevel = 1;
-char screen = 'p';
+char screen = 's';
 Player player;
 Map map;
 Enemy guy;
@@ -18,6 +18,7 @@ void setup() {
   jAvail = false;
   size(600, 600);
   //fullScreen();
+  btnStart = new Button("Start", 220,400,140,50);
   btnSettings = new Button("Settings", 220, 360, 160, 50);
   btnSave = new Button("Save", 220, 300, 160, 50);
   btnPlay = new Button("Unpause", 220, 240, 160, 50);
@@ -62,18 +63,18 @@ void draw() {
 }
 
 void keyPressed() {
-  if (key == 'a') l = true;
-  if (key == 'd') r = true;
-  if (key == 'w' || key == ' ') u = true;
+  if (key == 'a' || keyCode == 37) l = true;
+  if (key == 'd' || keyCode == 39) r = true;
+  if (key == 'w' || key == ' ' || keyCode == 38) u = true;
   if (key == 'e') menu.display();
   if (key == '-') screen = 'e';
   if (key == 'z') screen = 'z';
 }
 
 void keyReleased() {
-  if (key == 'a') l = false;
-  if (key == 'd') r = false;
-  if (key == 'w' || key == ' ') u = false;
+  if (key == 'a'|| keyCode == 37) l = false;
+  if (key == 'd'|| keyCode == 39) r = false;
+  if (key == 'w' || key == ' '|| keyCode == 38) u = false;
 }
 
 void mousePressed() {
