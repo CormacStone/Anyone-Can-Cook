@@ -108,8 +108,8 @@ class Map {
         int val = map[i][j];
         if (val == 7) continue; // air → skip
         else if (val == 0) mapLayer.fill(0, 150, 255);
-        else if (val == 1) mapLayer.fill(217,150,20);
-        else if (val == 2) mapLayer.fill(28,100,200);
+        else if (val == 1) mapLayer.fill(101,67,33);
+        else if (val == 2) mapLayer.fill(28,80,200);
         else if (val == 3) mapLayer.fill(0, 255, 0);
         else if (val == 4) mapLayer.fill(80);
         else if (val == 5) mapLayer.fill(20);
