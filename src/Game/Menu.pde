@@ -12,12 +12,13 @@ class Menu {
   }
   void hover() {
   }
+  //Trace Kinghorn
   void startScreen() {
     textAlign(CENTER);
     text("Start Screen: filler edition", width/2, 100);
     btnStart.display();
   }
-
+  //Maxwell Johnson
   void endScreen() {
     background(1);
     fill(255);
@@ -25,6 +26,7 @@ class Menu {
     textAlign(CENTER);
     text("You dumb",width/2, height/2);
   }
+  //Kolby Green
   void pauseScreen() {
     background(0);
   textAlign(CENTER);
