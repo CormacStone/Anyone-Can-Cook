@@ -1,7 +1,7 @@
 //Cormac Stone
 class Map {
   int[][] map;
-  int cellSize = 20;
+  int cellSize = 40;
   int rows, cols;
   String fileName;
   PGraphics mapLayer; // for cached drawing

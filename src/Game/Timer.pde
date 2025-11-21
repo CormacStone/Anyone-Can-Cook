@@ -1,4 +1,4 @@
-//Daniel Shiffman, our GOAT
+//Daniel Shiffman
 class Timer {
 
   int savedTime; // When Timer started
@@ -26,4 +26,3 @@ class Timer {
     }
   }
 }
-

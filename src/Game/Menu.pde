@@ -1,4 +1,4 @@
-//Cormac Stone, Trace Kinghorn, Maxwell Johnson + Kolby Green
+//Trace Kinghorn, Maxwell Johnson + Kolby Green
 class Menu {
   int x, y, w, h;
   Menu() {

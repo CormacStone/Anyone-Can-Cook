@@ -1,4 +1,3 @@
-//Cormac Stone, Trace Kinghorn
 class Player {
   float x, y;
   float w, h;
@@ -6,8 +5,9 @@ class Player {
   float vy; // vertical velocity
   PImage remmy;
   boolean inWater = false;
-
-
+  boolean onGround = false;
+  int jAvail = 6;  // number of jumps available
+  int tJAvail = 6;
   Player(float x, float y) {
     this(x, y, 20, 20, 3);
   }
@@ -25,40 +25,35 @@ class Player {
     fill(255, 0, 0);
     rect(x, y, w, h);
     remmy = loadImage("remmeigh3-3.png");
-    image(remmy, x-40, y-20);
+    image(remmy, x - 40, y - 20);
   }
+
   void handleMovement() {
 
-    // ----------------------------------------------------
-    // CHECK IF PLAYER IS IN WATER
-    // ----------------------------------------------------
+    // ----------------------
+    // WATER CHECK
+    // ----------------------
     int midCol = int((x + w/2) / map.cellSize);
     int midRow = int((y + h/2) / map.cellSize);
 
     int tile = map.getTile(midCol, midRow);
-    inWater = (tile == 2);  // water tile
+    inWater = (tile == 2);
+
+    float waterGravity = gravity * 0.2;
+    float waterXspeed = xspeed * 0.5;
+    float swimForce = -1.5;
+    float maxWaterFallSpeed = 2;
 
 
-    // ----------------------------------------------------
-    // CONSTANTS FOR WATER PHYSICS
-    // ----------------------------------------------------
-    float waterGravity = gravity * 0.2;  // fall slower
-    float waterXspeed = xspeed * 0.5;   // move slower
-    float swimForce = -1.5;             // weaker upward movement
-    float maxWaterFallSpeed = 2;        // cap sinking speed
-
-
-    // ----------------------------------------------------
-    // 1. HORIZONTAL MOVEMENT
-    // ----------------------------------------------------
+    // ----------------------
+    // HORIZONTAL MOVEMENT
+    // ----------------------
     float horizontalSpeed = inWater ? waterXspeed : xspeed;
     float newX = x;
 
     if (l) newX -= horizontalSpeed;
     if (r) newX += horizontalSpeed;
 
-
-    // --- Horizontal collision ---
     int top = int(y / map.cellSize);
     int bottom = int((y + h - 1) / map.cellSize);
 
@@ -83,9 +78,9 @@ class Player {
     x = newX;
 
 
-    // ----------------------------------------------------
-    // 2. APPLY GRAVITY or WATER BUOYANCY
-    // ----------------------------------------------------
+    // ----------------------
+    // GRAVITY
+    // ----------------------
     if (inWater) {
       vy += waterGravity;
       if (vy > maxWaterFallSpeed) vy = maxWaterFallSpeed;
@@ -94,9 +89,9 @@ class Player {
     }
 
 
-    // ----------------------------------------------------
-    // 3. VERTICAL MOVEMENT
-    // ----------------------------------------------------
+    // ----------------------
+    // VERTICAL MOVEMENT
+    // ----------------------
     float newY = y + vy;
 
     int left = int(x / map.cellSize);
@@ -104,17 +99,21 @@ class Player {
 
     onGround = false;
 
-    if (vy > 0) {  // FALLING
+    if (vy > 0) { // falling
       int row = int((newY + h) / map.cellSize);
       for (int c = left; c <= right; c++) {
         if (map.isSolid(c, row)) {
           newY = row * map.cellSize - h;
           vy = 0;
           onGround = true;
+
+          // reset jumps ONLY on real landing
+          jAvail = tJAvail;
+
           break;
         }
       }
-    } else if (vy < 0) { // MOVING UPWARDS
+    } else if (vy < 0) { // going upward
       int row = int(newY / map.cellSize);
       for (int c = left; c <= right; c++) {
         if (map.isSolid(c, row)) {
@@ -128,24 +127,27 @@ class Player {
     y = newY;
 
 
-    // ----------------------------------------------------
-    // 4. JUMP / SWIM
-    // ----------------------------------------------------
+    // ----------------------
+    // JUMPING (FIXED)
+    // ----------------------
+    // jumpPressed is the FIX — only fires once per key tap!
     if (!inWater) {
-      // normal jump
-      if (u && onGround) {
+
+      if (jumpPressed && jAvail > 0) {
         vy = jumpForce;
+        jAvail--;
         onGround = false;
       }
     } else {
-      // swimming upward
-      if (u) vy += swimForce;  // gentle upward swim
+      // swimming
+      if (u) vy += swimForce;
+      jAvail = tJAvail;  // reset when in water
     }
 
 
-    // ----------------------------------------------------
-    // 5. NEXT MAP (tile = 5)
-    // ----------------------------------------------------
+    // ----------------------
+    // MAP TRANSITION
+    // ----------------------
     int leftTile = map.getTile(int(x / map.cellSize), midRow);
     int rightTile = map.getTile(int((x + w - 1) / map.cellSize), midRow);
 
@@ -160,27 +162,19 @@ class Player {
   }
 
 
-
   void loadNextMap(String e) {
-    if (e=="left") {
-      currentLevel--;
-      e = "done";
-    }
-    if (e == "right") {
-      currentLevel++;
-      e = "done";
-    }
+    if (e.equals("left")) currentLevel--;
+    if (e.equals("right")) currentLevel++;
+
     String nextMapFile = currentLevel + ".csv";
     println("Loading next map: " + nextMapFile);
 
     map = new Map(nextMapFile);
 
-    // Reset player to start position
     player.x = 50;
     player.y = 50;
     player.vy = 0;
 
-    // Reset camera too
     camX = 0;
     camY = 0;
   }

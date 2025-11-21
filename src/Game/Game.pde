@@ -1,5 +1,5 @@
 //Cormac Stone
-boolean l, r, u, jAvail;  // movement keys
+boolean l, r, u;  // movement keys
 boolean onGround;
 float gravity = 0.4;
 float jumpForce = -12;
@@ -7,7 +7,9 @@ float camX = 0;
 float camY = 0;
 float camSmooth = 0.1;  // smaller = smoother
 int currentLevel = 1;
-char screen = 's';
+char screen = 'p';
+boolean jumpPressed = false;
+boolean jumpLastFrame = false;
 Player player;
 Map map;
 Enemy guy;
@@ -15,10 +17,9 @@ Menu menu;
 Button btnStart, btnPause, btnMenu, btnSettings, btnSave, btnPlay;
 
 void setup() {
-  jAvail = false;
   size(600, 600);
   //fullScreen();
-  btnStart = new Button("Start", 220,400,140,50);
+  btnStart = new Button("Start", 220, 400, 140, 50);
   btnSettings = new Button("Settings", 220, 360, 160, 50);
   btnSave = new Button("Save", 220, 300, 160, 50);
   btnPlay = new Button("Unpause", 220, 240, 160, 50);
@@ -46,11 +47,13 @@ void draw() {
     translate(-camX, -camY);
     map.drawMap();
     player.display();
+    jumpPressed = u && !jumpLastFrame;
+    jumpLastFrame = u;
     player.handleMovement();
     guy.display();
     guy.move();
     popMatrix();
-    println(player.x, player.y);
+    //println(player.x, player.y);
     break;
   case 'z':
     menu.pauseScreen();
@@ -59,7 +62,7 @@ void draw() {
     menu.endScreen();
     noLoop();
     break;
-  }   
+  }
 }
 
 void keyPressed() {
@@ -79,8 +82,8 @@ void keyReleased() {
 
 void mousePressed() {
   switch(screen) {
-    case 's':
-    if(btnStart.clicked()) {
+  case 's':
+    if (btnStart.clicked()) {
       screen = 'p';
     }
   }
