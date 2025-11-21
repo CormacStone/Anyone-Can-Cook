@@ -26,4 +26,11 @@ class Enemy {
   x+=move.x;
   y+=move.y;
   }
+  
+  boolean punkThem() {
+  float d = dist(x,y,player.x,player.y);
+  if(d<50) {
+  return true;
+  } else {return false;}
+  }
 }
