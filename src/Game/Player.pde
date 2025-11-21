@@ -1,16 +1,13 @@
 class Player {
-  float x, y;
-  float w, h;
+  float x, y, w, h;
   float xspeed;
-  float vy; // vertical velocity
-  PImage remmy;
-  boolean inWater = false;
+  float vy;
   boolean onGround = false;
-  int jAvail = 6;  // number of jumps available
+  boolean inWater  = false;
+  int jAvail = 6;
   int tJAvail = 6;
-  Player(float x, float y) {
-    this(x, y, 20, 20, 3);
-  }
+
+  PImage remmy;
 
   Player(float x, float y, float w, float h, float xspeed) {
     this.x = x;
@@ -18,15 +15,17 @@ class Player {
     this.w = w;
     this.h = h;
     this.xspeed = xspeed;
-    this.vy = 0;
+
+    remmy = loadImage("remmeigh3-3.png");  // load ONCE
   }
 
   void display() {
     fill(255, 0, 0);
     rect(x, y, w, h);
-    remmy = loadImage("remmeigh3-3.png");
     image(remmy, x - 40, y - 20);
   }
+
+
 
   void handleMovement() {
 

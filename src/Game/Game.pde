@@ -2,12 +2,12 @@
 boolean l, r, u;  // movement keys
 boolean onGround;
 float gravity = 0.4;
-float jumpForce = -12;
+float jumpForce = -20;
 float camX = 0;
 float camY = 0;
 float camSmooth = 0.1;  // smaller = smoother
 int currentLevel = 1;
-char screen = 'p';
+char screen = 's';
 boolean jumpPressed = false;
 boolean jumpLastFrame = false;
 Player player;
@@ -18,23 +18,26 @@ Button btnStart, btnPause, btnMenu, btnSettings, btnSave, btnPlay;
 
 void setup() {
   size(600, 600);
-  //fullScreen();
+  fullScreen(P2D);
+  frameRate(60);
   btnStart = new Button("Start", 220, 400, 140, 50);
   btnSettings = new Button("Settings", 220, 360, 160, 50);
   btnSave = new Button("Save", 220, 300, 160, 50);
   btnPlay = new Button("Unpause", 220, 240, 160, 50);
   menu = new Menu();
   map = new Map(1 + ".csv");   // loads CSV or defaults if missing
-  player = new Player(100, 100, 18, 80, 3); // (x, y, w, h, xspeed)
+  player = new Player(500, 500, 18, 80, 6); // (x, y, w, h, xspeed)
   guy = new Enemy(250, 250, 50, 50); // (x,y,w,h)
 }
 
 void draw() {
   switch(screen) {
   case 's':
+    cursor(ARROW);
     menu.startScreen();
     break;
   case 'p':
+    noCursor();
     background(255);
     // --- Smooth camera follow ---
     float targetCamX = constrain(player.x - width / 2, 0, map.cols * map.cellSize - width);
@@ -56,6 +59,7 @@ void draw() {
     //println(player.x, player.y);
     break;
   case 'z':
+    cursor(ARROW);
     menu.pauseScreen();
     break;
   case 'e':
