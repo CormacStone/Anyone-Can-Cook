@@ -86,5 +86,10 @@ void mousePressed() {
     if (btnStart.clicked()) {
       screen = 'p';
     }
+  break;
+  case 'z':
+    if(btnPlay.clicked()){
+      screen = 'p';
+    }
   }
 }
