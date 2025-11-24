@@ -24,17 +24,17 @@ class Menu {
     fill(255);
     textSize(100);
     textAlign(CENTER);
-    text("You dumb",width/2, height/2);
+    text("You dumb", width/2, height/2);
   }
   //Kolby Green
   void pauseScreen() {
-    background(0);
-  textAlign(CENTER);
-  textSize(100);
-  fill(255);
-  text("Pause", 300,200);
-  btnSettings.display();
-  btnSave.display();
-  btnPlay.display();
+    //background(0);
+    textAlign(CENTER);
+    textSize(100);
+    fill(255);
+    text("Pause", width/2, height/4);
+    btnSettings.display();
+    btnSave.display();
+    btnPlay.display();
   }
 }

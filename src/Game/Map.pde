@@ -1,6 +1,6 @@
 class Map {
   int[][] map;
-  int cellSize = 70;
+  int cellSize = 100;
   int rows, cols;
   String fileName;
 
@@ -50,13 +50,26 @@ class Map {
       for (int j = startRow; j <= endRow; j++) {
         int val = map[i][j];
         switch(val) {
-          case 0: fill(0,150,255); break; // air
-          case 1: fill(101,67,33); break; // dirt
-          case 2: fill(28,80,200); break; // water
-          case 3: fill(0,255,0); break;   // ground
-          case 4: fill(80); break;        // stone
-          case 5: fill(20); break;        // transitions
-          default: continue;              // skip air
+        //case 0:
+        //  fill(0, 150, 255);
+        //  break; // air
+        case 1:
+          fill(101, 67, 33);
+          break; // dirt
+        case 2:
+          fill(28, 80, 200);
+          break; // water
+        case 3:
+          fill(0, 255, 0);
+          break;   // ground
+        case 4:
+          fill(80);
+          break;        // stone
+        case 5:
+          fill(20);
+          break;        // transitions
+        default:
+          continue;              // skip air
         }
         rect(i * cellSize, j * cellSize, cellSize, cellSize);
       }

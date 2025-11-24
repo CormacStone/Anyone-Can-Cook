@@ -2,7 +2,7 @@
 boolean l, r, u;  // movement keys
 boolean onGround;
 float gravity = 0.4;
-float jumpForce = -20;
+float jumpForce = -12;
 float camX = 0;
 float camY = 0;
 float camSmooth = 0.1;  // smaller = smoother
@@ -10,6 +10,7 @@ int currentLevel = 1;
 char screen = 's';
 boolean jumpPressed = false;
 boolean jumpLastFrame = false;
+boolean right;
 Player player;
 Map map;
 Enemy guy;
@@ -19,11 +20,11 @@ Button btnStart, btnPause, btnMenu, btnSettings, btnSave, btnPlay;
 void setup() {
   size(600, 600);
   fullScreen(P2D);
-  frameRate(60);
+  frameRate(60);//               x,  y, width, height
   btnStart = new Button("Start", 220, 400, 140, 50);
-  btnSettings = new Button("Settings", 220, 360, 160, 50);
-  btnSave = new Button("Save", 220, 300, 160, 50);
-  btnPlay = new Button("Unpause", 220, 240, 160, 50);
+  btnSettings = new Button("Settings", width/2-80, height/2+140, 160, 50);
+  btnSave = new Button("Save", width/2-80, height/2+70, 160, 50);
+  btnPlay = new Button("Unpause", width/2-80, height/2, 160, 50);
   menu = new Menu();
   map = new Map(1 + ".csv");   // loads CSV or defaults if missing
   player = new Player(500, 500, 18, 80, 6); // (x, y, w, h, xspeed)
@@ -39,6 +40,8 @@ void draw() {
   case 'p':
     noCursor();
     background(255);
+    fill(0);
+
     // --- Smooth camera follow ---
     float targetCamX = constrain(player.x - width / 2, 0, map.cols * map.cellSize - width);
     float targetCamY = constrain(player.y - height / 2, 0, map.rows * map.cellSize - height);
@@ -46,6 +49,7 @@ void draw() {
     camY = lerp(camY, targetCamY, camSmooth);
 
     // --- Apply camera ---
+
     pushMatrix();
     translate(-camX, -camY);
     map.drawMap();
@@ -56,7 +60,11 @@ void draw() {
     guy.display();
     guy.move();
     popMatrix();
-    //println(player.x, player.y);
+    textSize(50);
+    fill(0);
+    text("Health: " + player.health, 150, 100);
+    println("player x " + player.x, "player y " + player.y);
+    println("player iframes " + player.iFrames, "player health " + player.health);
     break;
   case 'z':
     cursor(ARROW);
@@ -70,8 +78,14 @@ void draw() {
 }
 
 void keyPressed() {
-  if (key == 'a' || keyCode == 37) l = true;
-  if (key == 'd' || keyCode == 39) r = true;
+  if (key == 'a' || keyCode == 37) {
+    l = true;
+    right = false;
+  }
+  if (key == 'd' || keyCode == 39) {
+    r = true;
+    right = true;
+  }
   if (key == 'w' || key == ' ' || keyCode == 38) u = true;
   if (key == 'e') menu.display();
   if (key == '-') screen = 'e';
@@ -90,9 +104,9 @@ void mousePressed() {
     if (btnStart.clicked()) {
       screen = 'p';
     }
-  break;
+    break;
   case 'z':
-    if(btnPlay.clicked()){
+    if (btnPlay.clicked()) {
       screen = 'p';
     }
   }

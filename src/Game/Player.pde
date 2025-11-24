@@ -4,9 +4,13 @@ class Player {
   float vy;
   boolean onGround = false;
   boolean inWater  = false;
+  int health = 100;
   int jAvail = 6;
   int tJAvail = 6;
-
+  int iFrames = 0;
+  int maxIFrames = 100;
+  float knockbackVX = 0;
+  float knockFriction = 0.9;
   PImage remmy;
 
   Player(float x, float y, float w, float h, float xspeed) {
@@ -15,15 +19,21 @@ class Player {
     this.w = w;
     this.h = h;
     this.xspeed = xspeed;
-
-    remmy = loadImage("remmeigh3-3.png");  // load ONCE
   }
 
   void display() {
     fill(255, 0, 0);
     rect(x, y, w, h);
+
+    if (right == true)
+    {
+      remmy = loadImage("remmeigh3-3.png");
+    } else {
+      remmy = loadImage("remmeigh_left.png");
+    }
     image(remmy, x - 40, y - 20);
   }
+
 
 
 
@@ -42,7 +52,9 @@ class Player {
     float waterXspeed = xspeed * 0.5;
     float swimForce = -1.5;
     float maxWaterFallSpeed = 2;
-
+    x += knockbackVX;
+    knockbackVX *= knockFriction;
+    if (abs(knockbackVX) < 0.1) knockbackVX = 0;
 
     // ----------------------
     // HORIZONTAL MOVEMENT
@@ -125,11 +137,6 @@ class Player {
 
     y = newY;
 
-
-    // ----------------------
-    // JUMPING (FIXED)
-    // ----------------------
-    // jumpPressed is the FIX — only fires once per key tap!
     if (!inWater) {
 
       if (jumpPressed && jAvail > 0) {
@@ -141,6 +148,27 @@ class Player {
       // swimming
       if (u) vy += swimForce;
       jAvail = tJAvail;  // reset when in water
+    }
+    // --------------------
+    // Enemy Collision
+    // --------------------
+    if (iFrames <= 0) {
+      if (guy.punkThem()) {
+
+        // Horizontal knock direction
+        float dir = ((x + w/2) < (guy.x + guy.w/2)) ? -1 : 1;
+
+        health -= 1;
+
+        // Smooth knockback: set velocity instead of teleport
+        knockbackVX = dir * 69; // strength
+        vy = -6;               // upward bump
+
+        // Start invincibility
+        iFrames = maxIFrames;
+
+        println("Player hit — smooth knockback!");
+      }
     }
 
 
@@ -158,6 +186,8 @@ class Player {
       loadNextMap("right");
       return;
     }
+    if (iFrames > 0) iFrames -= 100/60;
+    if (health <= 0) screen = 'e';
   }
 
 
