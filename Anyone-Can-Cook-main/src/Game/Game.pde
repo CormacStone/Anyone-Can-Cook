@@ -1,0 +1,113 @@
+//Cormac Stone
+boolean l, r, u;  // movement keys
+boolean onGround;
+float gravity = 0.4;
+float jumpForce = -12;
+float camX = 0;
+float camY = 0;
+float camSmooth = 0.1;  // smaller = smoother
+int currentLevel = 1;
+char screen = 's';
+boolean jumpPressed = false;
+boolean jumpLastFrame = false;
+boolean right;
+Player player;
+Map map;
+Enemy guy;
+Menu menu;
+Button btnStart, btnPause, btnMenu, btnSettings, btnSave, btnPlay;
+
+void setup() {
+  size(600, 600);
+  fullScreen(P2D);
+  frameRate(60);//               x,  y, width, height
+  btnStart = new Button("Start", width/2, height/2, 140, 50);
+  btnSettings = new Button("Settings", width/2-80, height/2+140, 160, 50);
+  btnSave = new Button("Save", width/2-80, height/2+70, 160, 50);
+  btnPlay = new Button("Unpause", width/2-80, height/2, 160, 50);
+  menu = new Menu();
+  map = new Map(1 + ".csv");   // loads CSV or defaults if missing
+  player = new Player(500, 500, 18, 80, 6); // (x, y, w, h, xspeed)
+  guy = new Enemy(250, 250, 50, 50); // (x,y,w,h)
+}
+
+void draw() {
+  switch(screen) {
+  case 's':
+    cursor(ARROW);
+    menu.startScreen();
+    break;
+  case 'p':
+    noCursor();
+    background(255);
+    fill(0);
+
+    // --- Smooth camera follow ---
+    float targetCamX = constrain(player.x - width / 2, 0, map.cols * map.cellSize - width);
+    float targetCamY = constrain(player.y - height / 2, 0, map.rows * map.cellSize - height);
+    camX = lerp(camX, targetCamX, camSmooth);
+    camY = lerp(camY, targetCamY, camSmooth);
+
+    // --- Apply camera ---
+
+    pushMatrix();
+    translate(-camX, -camY);
+    map.drawMap();
+    player.display();
+    jumpPressed = u && !jumpLastFrame;
+    jumpLastFrame = u;
+    player.handleMovement();
+    guy.display();
+    guy.move();
+    popMatrix();
+    textSize(50);
+    fill(0);
+    text("Health: " + player.health, 150, 100);
+    println("player x " + player.x, "player y " + player.y);
+    println("player iframes " + player.iFrames, "player health " + player.health);
+    break;
+  case 'z':
+    cursor(ARROW);
+    menu.pauseScreen();
+    break;
+  case 'e':
+    menu.endScreen();
+    noLoop();
+    break;
+  }
+}
+
+void keyPressed() {
+  if (key == 'a' || keyCode == 37) {
+    l = true;
+    right = false;
+  }
+  if (key == 'd' || keyCode == 39) {
+    r = true;
+    right = true;
+  }
+  if (key == 'w' || key == ' ' || keyCode == 38) u = true;
+  if (key == 'e') menu.display();
+  if (key == '-') screen = 'e';
+  if (key == 'z') screen = 'z';
+}
+
+void keyReleased() {
+  if (key == 'a'|| keyCode == 37) l = false;
+  if (key == 'd'|| keyCode == 39) r = false;
+  if (key == 'w' || key == ' '|| keyCode == 38) u = false;
+}
+
+void mousePressed() {
+  switch(screen) {
+  case 's':
+    if (btnStart.clicked()) {
+      screen = 'p';
+    }
+    break;
+  case 'z':
+    if (btnPlay.clicked()) {
+      screen = 'p';
+    }
+  }
+}
