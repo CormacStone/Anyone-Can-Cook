@@ -4,7 +4,7 @@ class Player {
   float vy;
   boolean onGround = false;
   boolean inWater  = false;
-  int health = 100;
+  int health = 5;
   int jAvail = 6;
   int tJAvail = 6;
   int iFrames = 0;
