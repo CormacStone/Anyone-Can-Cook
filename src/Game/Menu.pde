@@ -1,7 +1,7 @@
 //Kolby Green
 class Menu {
   int x, y, w, h;
-  PImage img;
+  PImage img, go;
 
   Menu() {
     x=width/2;
@@ -9,13 +9,14 @@ class Menu {
     w=25;
     h=75;
     img = loadImage("ScrollingBackground.png");
+    go = loadImage("GameOver.png");
   }
   void display() {
     rect(x, y, w, h);
   }
   void hover() {
   }
-  //Trace Kinghorn
+  //Trace Kinghorn, Kolby Green
   void startScreen() {
     background(80);
     img.resize(width+400, height);
@@ -32,10 +33,13 @@ class Menu {
   //Maxwell Johnson
   void endScreen() {
     background(1);
-    fill(255);
-    textSize(100);
-    textAlign(CENTER);
-    text("You dumb", width/2, height/2);
+    go.resize(width,height);
+    imageMode(CENTER);
+    image(go,width/2,height/2);
+    //fill(255);
+    //textSize(100);
+    //textAlign(CENTER);
+    //text("You dumb", width/2, height/2);
   }
   //Kolby Green
   void pauseScreen() {
