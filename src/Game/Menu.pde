@@ -32,19 +32,17 @@ class Menu {
   }
   //Maxwell Johnson
   void endScreen() {
+    cursor(ARROW);
     background(1);
-    go.resize(width,height);
+    go.resize(width, height);
     imageMode(CENTER);
-    image(go,width/2,height/2);
-    //fill(255);
-    //textSize(100);
-    //textAlign(CENTER);
-    //text("You dumb", width/2, height/2);
+    image(go, width/2, height/2);
   }
   //Kolby Green
   void pauseScreen() {
     //background(0);
     textAlign(CENTER);
+    cursor(ARROW); 
     textSize(100);
     fill(255);
     text("Pause", width/2, height/4);

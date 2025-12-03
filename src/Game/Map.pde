@@ -1,6 +1,7 @@
+//Cormac Stone, with help from mr gpt
 class Map {
   int[][] map;
-  int cellSize = 100;
+  int cellSize = 30;
   int rows, cols;
   String fileName;
 
@@ -32,10 +33,10 @@ class Map {
       for (int i = 0; i < cols; i++) {
         map[i][j] = int(trim(tokens[i]));
         if (map[i][j] == 6) {
-    float ex = i * cellSize;
-    float ey = j * cellSize;
-    enemies.add(new Enemy(ex, ey, 50, 50,"mousetrap"));
-}
+          float ex = i * cellSize;
+          float ey = j * cellSize;
+          enemies.add(new Enemy(ex, ey, 50, 50, "mousetrap"));
+        }
       }
     }
   }
@@ -55,29 +56,29 @@ class Map {
       for (int j = startRow; j <= endRow; j++) {
         int val = map[i][j];
         switch(val) {
-        //case 0:
-        //  fill(0, 150, 255);
-        //  break; // air
         case 1:
           fill(101, 67, 33);
           break; // dirt
         case 2:
           fill(28, 80, 200);
-          break; // water
+          break;  // water
         case 3:
           fill(0, 255, 0);
           break;   // ground
         case 4:
           fill(80);
-          break;        // stone
+          break;  // platforms
         case 5:
           fill(20);
-          break;        // transitions
-          //case 6:
-          //float ex= i* cols;
-          //float ey = j* rows;
-          //enemies.add (new Enemy(ex,ey,50,50));
-          //break;
+          break;    // screen transitions
+        case 6:
+          fill(255,255,10);
+          float ex= i* cols;
+          float ey = j* rows;
+          if(enemies.size() > 20){
+          enemies.add (new Enemy(ex, ey, 50, 50, "basic"));
+          }
+          break;
         default:
           continue;              // skip air
         }

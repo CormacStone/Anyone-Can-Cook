@@ -1,14 +1,15 @@
+//Cormac Stone, with help from mr gpt
 class Player {
   float x, y, w, h;
   float xspeed;
   float vy;
   boolean onGround = false;
   boolean inWater  = false;
-  int health = 5;
-  int jAvail = 6;
-  int tJAvail = 6;
+  int health = 50;
+  int jAvail;
+  int tJAvail = 3;
   int iFrames = 0;
-  int maxIFrames = 100;
+  int maxIFrames = 85;
   float knockbackVX = 0;
   float knockFriction = 0.9;
   PImage remmy;
@@ -23,7 +24,7 @@ class Player {
 
   void display() {
     fill(255, 0, 0);
-    rect(x, y, w, h);
+    rect(x,y,w,h);
 
     if (right == true)
     {
@@ -31,6 +32,7 @@ class Player {
     } else {
       remmy = loadImage("remmeigh_left.png");
     }
+    imageMode(CORNER);
     image(remmy, x - 40, y - 20);
   }
 
@@ -154,22 +156,20 @@ class Player {
     // --------------------
     if (iFrames <= 0) {
       for (Enemy guy : enemies) {
-      if (guy.punkThem()) {
+        if (guy.punkThem()) {
 
-        // Horizontal knock direction
-        float dir = ((x + w/2) < (guy.x + guy.w/2)) ? -1 : 1;
+          // Horizontal knock direction
+          float dir = ((x + w/2) < (guy.x + guy.w/2)) ? -1 : 1;
 
-        health -= 1;
+          health -= 1;
 
-        // Smooth knockback: set velocity instead of teleport
-        knockbackVX = dir * 69; // strength
-        vy = -6;               // upward bump
+          // Smooth knockback: set velocity instead of teleport
+          knockbackVX = dir * 30; // strength
+          vy = -6;               // upward bump
 
-        // Start invincibility
-        iFrames = maxIFrames;
-
-        println("Player hit — smooth knockback!");
-      }
+          // Start invincibility
+          iFrames = maxIFrames;
+        }
       }
     }
 
@@ -202,8 +202,8 @@ class Player {
 
     map = new Map(nextMapFile);
 
-    player.x = 50;
-    player.y = 50;
+    player.x = 100;
+    player.y = 100;
     player.vy = 0;
 
     camX = 0;

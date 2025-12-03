@@ -1,7 +1,7 @@
-//Cormac Stone
+//Cormac Stone, with help from mr gpt
 boolean l, r, u;  // movement keys
 boolean onGround;
-float gravity = 0.4;
+float gravity = 0.6;
 float jumpForce = -12;
 float camX = 0;
 float camY = 0;
@@ -27,8 +27,8 @@ void setup() {
   btnSave = new Button("Save", width/2-80, height/2+70, 160, 50);
   btnPlay = new Button("Unpause", width/2-80, height/2, 160, 50);
   menu = new Menu();
-  map = new Map(5 + ".csv");   // loads CSV or defaults if missing
-  player = new Player(500, 500, 18, 80, 15); // (x, y, w, h, xspeed)
+  map = new Map(currentLevel + ".csv");   // loads CSV or defaults if missing
+  player = new Player(500, 500, 18, 80, map.cellSize/2); // (x, y, w, h, xspeed)
  // (x,y,w,h)
 }
 
@@ -40,7 +40,7 @@ void draw() {
     break;
   case 'p':
     noCursor();
-    background(255);
+    background(0,150,255);
     fill(0);
 
     // --- Smooth camera follow ---
@@ -80,10 +80,11 @@ void draw() {
     }
     popMatrix();
     textSize(50);
-    fill(0);
+    fill(255,255,0);
     text("Health: " + player.health, 150, 100);
-    println("player x " + player.x, "player y " + player.y);
-    println("player iframes " + player.iFrames, "player health " + player.health);
+    println(currentLevel);
+    //println("player x " + player.x, "player y " + player.y);
+    //println("player iframes " + player.iFrames, "player health " + player.health);
     break;
   case 'z':
     cursor(ARROW);
