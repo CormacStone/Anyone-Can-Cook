@@ -1,6 +1,7 @@
 //Cormac Stone, with help from mr gpt
 boolean l, r, u;  // movement keys
 boolean onGround;
+PImage back;
 float gravity = 0.6;
 float jumpForce = -12;
 float camX = 0;
@@ -22,6 +23,8 @@ void setup() {
   size(600, 600);
   fullScreen(P2D);
   frameRate(60);//               x,  y, width, height
+  back = loadImage("Background.png");
+  back.resize(width,height);
   btnStart = new Button("Start", 220, 400, 140, 50);
   btnSettings = new Button("Settings", width/2-80, height/2+140, 160, 50);
   btnSave = new Button("Save", width/2-80, height/2+70, 160, 50);
@@ -40,7 +43,7 @@ void draw() {
     break;
   case 'p':
     noCursor();
-    background(0,150,255);
+    background(back);
     fill(0);
 
     // --- Smooth camera follow ---
