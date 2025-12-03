@@ -1,19 +1,31 @@
 //Kolby Green + Maxwell Johnson
 class Enemy {
-  int x, y, w, h, xspeed;
+  int w, h, xspeed;
+  float  x, y;
   PImage guy;
-  Enemy(int x, int y, int w, int h) {
+  String type;
+  Enemy(float x, float y, int w, int h, String type) {
     this.x=x;
     this.y=y;
     this.h=h;
     this.w=w;
     xspeed=3;
+    this.type= type;
   }
 
   void display() {
     //rect(x, y, h, w);
+    switch (type) {
+      case "basic":
     guy = loadImage("guy.png");
-    guy.resize (w, h);
+        guy.resize (w, h);
+    break;
+    case "mousetrap":
+    guy = loadImage("mousetrap.png");
+        guy.resize (w*2, h*2);
+    break;
+    }
+
     image(guy, x, y);
   }
 
@@ -34,5 +46,20 @@ class Enemy {
     } else {
       return false;
     }
+  }
+  
+    boolean tooClose(Enemy guy) {
+    float d = dist(x, y, guy.x, guy.y);
+    if (d<50) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  boolean isOnScreen () {
+        float d = dist(x, y, player.x, player.y);
+  if (d<1000) return true;
+  else return false;
   }
 }

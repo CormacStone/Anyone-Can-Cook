@@ -4,7 +4,7 @@ class Player {
   float vy;
   boolean onGround = false;
   boolean inWater  = false;
-  int health = 100;
+  int health = 5;
   int jAvail = 6;
   int tJAvail = 6;
   int iFrames = 0;
@@ -153,6 +153,7 @@ class Player {
     // Enemy Collision
     // --------------------
     if (iFrames <= 0) {
+      for (Enemy guy : enemies) {
       if (guy.punkThem()) {
 
         // Horizontal knock direction
@@ -168,6 +169,7 @@ class Player {
         iFrames = maxIFrames;
 
         println("Player hit — smooth knockback!");
+      }
       }
     }
 
@@ -200,8 +202,8 @@ class Player {
 
     map = new Map(nextMapFile);
 
-    player.x = 50;
-    player.y = 50;
+    player.x = 100;
+    player.y = 100;
     player.vy = 0;
 
     camX = 0;

@@ -15,7 +15,7 @@ class Menu {
   }
   void hover() {
   }
-  //Trace Kinghorn, Kolby Green
+  //Trace Kinghorn
   void startScreen() {
     background(80);
     img.resize(width+400, height);

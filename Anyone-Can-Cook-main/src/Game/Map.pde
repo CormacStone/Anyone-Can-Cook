@@ -1,6 +1,6 @@
 class Map {
   int[][] map;
-  int cellSize = 100;
+  int cellSize = 30;
   int rows, cols;
   String fileName;
 
@@ -31,6 +31,11 @@ class Map {
       String[] tokens = split(lines[j], ',');
       for (int i = 0; i < cols; i++) {
         map[i][j] = int(trim(tokens[i]));
+        if (map[i][j] == 6) {
+    float ex = i * cellSize;
+    float ey = j * cellSize;
+    enemies.add(new Enemy(ex, ey, 50, 50,"mousetrap"));
+}
       }
     }
   }
@@ -68,6 +73,11 @@ class Map {
         case 5:
           fill(20);
           break;        // transitions
+          //case 6:
+          //float ex= i* cols;
+          //float ey = j* rows;
+          //enemies.add (new Enemy(ex,ey,50,50));
+          //break;
         default:
           continue;              // skip air
         }
