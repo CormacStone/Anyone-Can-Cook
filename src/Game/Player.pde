@@ -153,6 +153,7 @@ class Player {
     // Enemy Collision
     // --------------------
     if (iFrames <= 0) {
+      for (Enemy guy : enemies) {
       if (guy.punkThem()) {
 
         // Horizontal knock direction
@@ -168,6 +169,7 @@ class Player {
         iFrames = maxIFrames;
 
         println("Player hit — smooth knockback!");
+      }
       }
     }
 
