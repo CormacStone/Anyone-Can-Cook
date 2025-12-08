@@ -60,7 +60,7 @@ class Enemy {
   
   boolean isOnScreen () {
         float d = dist(x, y, player.x, player.y);
-  if (d<1000) return true;
+  if (d<5000) return true;
   else return false;
   }
 }
