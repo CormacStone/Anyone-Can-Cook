@@ -16,14 +16,14 @@ class Enemy {
   void display() {
     //rect(x, y, h, w);
     switch (type) {
-      case "basic":
-    guy = loadImage("guy.png");
-        guy.resize (w, h);
-    break;
+    case "basic":
+      guy = loadImage("guy.png");
+      guy.resize (w, h);
+      break;
     case "mousetrap":
-    guy = loadImage("mousetrap.png");
-        guy.resize (w*2, h*2);
-    break;
+      guy = loadImage("mousetrap.png");
+      guy.resize (w*2, h*2);
+      break;
     }
     //rect(x,y,w,h);
     imageMode(CENTER);
@@ -48,8 +48,8 @@ class Enemy {
       return false;
     }
   }
-  
-    boolean tooClose(Enemy guy) {
+
+  boolean tooClose(Enemy guy) {
     float d = dist(x, y, guy.x, guy.y);
     if (d<50) {
       return true;
@@ -57,10 +57,10 @@ class Enemy {
       return false;
     }
   }
-  
+
   boolean isOnScreen () {
-        float d = dist(x, y, player.x, player.y);
-  if (d<5000) return true;
-  else return false;
+    float d = dist(x, y, player.x, player.y);
+    if (d<2000) return true;
+    else return false;
   }
 }

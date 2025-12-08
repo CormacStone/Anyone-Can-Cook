@@ -208,5 +208,9 @@ class Player {
 
     camX = 0;
     camY = 0;
+    for(int i = 0; i < enemies.size(); i++){
+      Enemy enemy = enemies.get(i);
+      enemies.remove(enemy);
+    }
   }
 }

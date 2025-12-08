@@ -71,14 +71,14 @@ class Map {
         case 5:
           fill(20);
           break;    // screen transitions
-        case 6:
-          fill(255, 255, 10);
-          float ex= i* cols;
-          float ey = j* rows;
-          if (enemies.size() > 20) {
-            enemies.add (new Enemy(ex, ey, 50, 50, "basic"));
-          }
-          break;
+        //case 6:
+        //  fill(255, 255, 10);
+        //  float ex= i* cols;
+        //  float ey = j* rows;
+        //  if (enemies.size() < 20) {
+        //    //enemies.add (new Enemy(ex, ey, 50, 50, "basic"));
+        //  }
+        //  break;
         default:
           continue;              // skip air
         }
