@@ -35,7 +35,7 @@ class Map {
         if (map[i][j] == 6) {
           float ex = i * cellSize;
           float ey = j * cellSize;
-          enemies.add(new Enemy(ex, ey, 50, 50, "mousetrap"));
+          enemies.add(new Enemy(ex, ey, 50, 50, "basic"));
         }
       }
     }
@@ -72,11 +72,11 @@ class Map {
           fill(20);
           break;    // screen transitions
         case 6:
-          fill(255,255,10);
+          fill(255, 255, 10);
           float ex= i* cols;
           float ey = j* rows;
-          if(enemies.size() > 20){
-          enemies.add (new Enemy(ex, ey, 50, 50, "basic"));
+          if (enemies.size() > 20) {
+            enemies.add (new Enemy(ex, ey, 50, 50, "basic"));
           }
           break;
         default:

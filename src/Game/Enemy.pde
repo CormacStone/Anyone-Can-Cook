@@ -25,7 +25,7 @@ class Enemy {
         guy.resize (w*2, h*2);
     break;
     }
-    rect(x,y,w,h);
+    //rect(x,y,w,h);
     imageMode(CENTER);
     image(guy, x, y);
   }

@@ -5,7 +5,7 @@ class Player {
   float vy;
   boolean onGround = false;
   boolean inWater  = false;
-  int health = 50;
+  int health = 5;
   int jAvail;
   int tJAvail = 3;
   int iFrames = 0;
@@ -24,7 +24,7 @@ class Player {
 
   void display() {
     fill(255, 0, 0);
-    rect(x,y,w,h);
+    //rect(x,y,w,h);
 
     if (right == true)
     {

@@ -31,7 +31,7 @@ void setup() {
   btnPlay = new Button("Unpause", width/2-80, height/2, 160, 50);
   menu = new Menu();
   map = new Map(currentLevel + ".csv");   // loads CSV or defaults if missing
-  player = new Player(500, 500, 18, 80, map.cellSize/2); // (x, y, w, h, xspeed)
+  player = new Player(500, 500, 18, 80, map.cellSize/3); // (x, y, w, h, xspeed)
  // (x,y,w,h)
 }
 
