@@ -25,7 +25,7 @@ void setup() {
   frameRate(60);//               x,  y, width, height
   back = loadImage("Background.png");
   back.resize(width,height);
-  btnStart = new Button("Start", 220, 400, 140, 50);
+  btnStart = new Button("Start", width/2, height/2+200, 140, 50);
   btnSettings = new Button("Settings", width/2-80, height/2+140, 160, 50);
   btnSave = new Button("Save", width/2-80, height/2+70, 160, 50);
   btnPlay = new Button("Unpause", width/2-80, height/2, 160, 50);
